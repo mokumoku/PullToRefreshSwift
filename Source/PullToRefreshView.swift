@@ -26,7 +26,7 @@ public class PullToRefreshView: UIView {
     private var arrow: UIImageView
     private var indicator: UIActivityIndicatorView
     private var scrollViewBounces: Bool = false
-    private var scrollViewInsets: UIEdgeInsets = UIEdgeInsetsZero
+    private var scrollViewInsets: UIEdgeInsets = UIEdgeInsets.zero
     private var refreshCompletion: ((Void) -> Void)?
     private var pull: Bool = true
     
@@ -51,11 +51,11 @@ public class PullToRefreshView: UIView {
                 stopAnimating()
             case .Finish:
                 var duration = PullToRefreshConst.animationDuration
-                DispatchQueue.main.after(when: .now() + duration) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                     self.stopAnimating()
                 }
                 duration = duration * 2
-                DispatchQueue.main.after(when: .now() + duration) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                     self.removeFromSuperview()
                 }
             case .Refreshing:
@@ -230,7 +230,7 @@ public class PullToRefreshView: UIView {
             },
                                    completion: { _ in
                 if self.options.autoStopTime != 0 {
-                    DispatchQueue.main.after(when: .now() + self.options.autoStopTime) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.options.autoStopTime) {
                         self.state = .Stop
                     }
                 }
