@@ -9,11 +9,11 @@ import UIKit
 
 public class PullToRefreshView: UIView {
     enum PullToRefreshState {
-        case Pulling
-        case Triggered
-        case Refreshing
-        case Stop
-        case Finish
+        case pulling
+        case triggerd
+        case refreshing
+        case stop
+        case finish
     }
     
     // MARK: Variables
@@ -41,15 +41,15 @@ public class PullToRefreshView: UIView {
         }
     }
     
-    var state: PullToRefreshState = PullToRefreshState.Pulling {
+    var state: PullToRefreshState = PullToRefreshState.pulling {
         didSet {
             if self.state == oldValue {
                 return
             }
             switch self.state {
-            case .Stop:
+            case .stop:
                 stopAnimating()
-            case .Finish:
+            case .finish:
                 var duration = PullToRefreshConst.animationDuration
                 DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                     self.stopAnimating()
@@ -58,11 +58,11 @@ public class PullToRefreshView: UIView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                     self.removeFromSuperview()
                 }
-            case .Refreshing:
+            case .refreshing:
                 startAnimating()
-            case .Pulling: //starting point
+            case .pulling: //starting point
                 arrowRotationBack()
-            case .Triggered:
+            case .triggerd:
                 arrowRotation()
             }
         }
@@ -171,14 +171,14 @@ public class PullToRefreshView: UIView {
             }
             if offsetY < -self.frame.size.height {
                 // pulling or refreshing
-                if scrollView.isDragging == false && self.state != .Refreshing { //release the finger
-                    self.state = .Refreshing //startAnimating
-                } else if self.state != .Refreshing { //reach the threshold
-                    self.state = .Triggered
+                if scrollView.isDragging == false && self.state != .refreshing { //release the finger
+                    self.state = .refreshing //startAnimating
+                } else if self.state != .refreshing { //reach the threshold
+                    self.state = .triggerd
                 }
-            } else if self.state == .Triggered {
+            } else if self.state == .triggerd {
                 //starting point, start from pulling
-                self.state = .Pulling
+                self.state = .pulling
             }
             return //return for pull down
         }
@@ -192,14 +192,14 @@ public class PullToRefreshView: UIView {
             }
             if upHeight > self.frame.size.height {
                 // pulling or refreshing
-                if scrollView.isDragging == false && self.state != .Refreshing { //release the finger
-                    self.state = .Refreshing //startAnimating
-                } else if self.state != .Refreshing { //reach the threshold
-                    self.state = .Triggered
+                if scrollView.isDragging == false && self.state != .refreshing { //release the finger
+                    self.state = .refreshing //startAnimating
+                } else if self.state != .refreshing { //reach the threshold
+                    self.state = .triggerd
                 }
-            } else if self.state == .Triggered  {
+            } else if self.state == .triggerd  {
                 //starting point, start from pulling
-                self.state = .Pulling
+                self.state = .pulling
             }
         }
     }
@@ -231,7 +231,7 @@ public class PullToRefreshView: UIView {
                                    completion: { _ in
                 if self.options.autoStopTime != 0 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + self.options.autoStopTime) {
-                        self.state = .Stop
+                        self.state = .stop
                     }
                 }
                 self.refreshCompletion?()
@@ -252,7 +252,7 @@ public class PullToRefreshView: UIView {
                                     self.arrow.transform = CGAffineTransform.identity
                                     }
         ) { _ in
-            self.state = .Pulling
+            self.state = .pulling
         }
     }
     

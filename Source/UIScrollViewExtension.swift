@@ -38,15 +38,15 @@ public extension UIScrollView {
     
     public func startPullRefresh() {
         let refreshView = self.refreshViewWithTag(tag: PullToRefreshConst.pullTag)
-        refreshView?.state = .Refreshing
+        refreshView?.state = .refreshing
     }
     
     public func stopPullRefreshEver(ever:Bool = false) {
         let refreshView = self.refreshViewWithTag(tag: PullToRefreshConst.pullTag)
         if ever {
-            refreshView?.state = .Finish
+            refreshView?.state = .finish
         } else {
-            refreshView?.state = .Stop
+            refreshView?.state = .stop
         }
     }
     
@@ -57,15 +57,15 @@ public extension UIScrollView {
     
     public func startPushRefresh() {
         let refreshView = self.refreshViewWithTag(tag: PullToRefreshConst.pushTag)
-        refreshView?.state = .Refreshing
+        refreshView?.state = .refreshing
     }
     
     public func stopPushRefreshEver(ever:Bool = false) {
         let refreshView = self.refreshViewWithTag(tag: PullToRefreshConst.pushTag)
         if ever {
-            refreshView?.state = .Finish
+            refreshView?.state = .finish
         } else {
-            refreshView?.state = .Stop
+            refreshView?.state = .stop
         }
     }
     
