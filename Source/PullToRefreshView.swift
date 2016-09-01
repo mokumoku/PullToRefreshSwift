@@ -88,7 +88,7 @@ public class PullToRefreshView: UIView {
         self.arrow = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         self.arrow.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin]
         
-        self.arrow.image = UIImage(named: PullToRefreshConst.imageName, in: Bundle(for: self.dynamicType), compatibleWith: nil)
+        self.arrow.image = UIImage(named: PullToRefreshConst.imageName, in: Bundle(for: type(of: self)), compatibleWith: nil)
         
         
         self.indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
@@ -139,7 +139,7 @@ public class PullToRefreshView: UIView {
     }
     
     // MARK: KVO
-    public override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let scrollView = object as? UIScrollView else {
             return
         }
